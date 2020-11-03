@@ -2,11 +2,7 @@ import {Form, Button, Alert} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 
 const handleBtn = (event) => {
-    
-    <Alert key={0} variant="danger">
-    This is a Danger alert—check it out!
-  </Alert>
-  alert("Yo");
+console.log("hi")
 };
  function Home(){
     return(

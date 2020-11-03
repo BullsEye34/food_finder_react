@@ -23,11 +23,11 @@ connection.connect((err) => {
 const app = express();
 app.use(cors());
 
-// Creating a GET route that returns data from the 'auth' table.
+// Creating a GET route that returns data from the 'users' table.
 app.get('/auth', function (req, res) {
     // Connecting to the database.
     // Executing the MySQL query (select all data from the 'users' table).
-    connection.query('SELECT * FROM auth', function (error, results, fields) {
+    connection.query('SELECT * FROM users', function (error, results, fields) {
       // If some error occurs, we throw an error.
       if (error) {
         return res.send(err);
@@ -42,7 +42,26 @@ app.get('/auth', function (req, res) {
     });
 });
 
-// Creating a GET route that returns data from the 'users' table.
+// Creating a GET route that returns data from the 'Admin' table.
+app.get('/admin', function (req, res) {
+  // Connecting to the database.
+  // Executing the MySQL query (select all data from the 'users' table).
+  connection.query('SELECT * FROM admin', function (error, results, fields) {
+    // If some error occurs, we throw an error.
+    if (error) {
+      return res.send(err);
+    }
+
+    // Getting the 'response' from the database and sending it to our route. This is were the data is.
+    else {
+      return res.json({
+        data: results
+      });
+    };
+  });
+});
+
+// Creating a GET route that returns data from the 'items' table.
 app.get('/items', function (req, res) {
   // Connecting to the database.
   // Executing the MySQL query (select all data from the 'users' table).
@@ -63,6 +82,6 @@ app.get('/items', function (req, res) {
 
 
 // Starting our server.
-app.listen(3000, () => {
+app.listen(3090, () => {
  console.log('Go to http://localhost:3000/ so you can see the data.');
 });
