@@ -1,7 +1,9 @@
 .App {
   text-align: center;
   overflow-y: hidden;
+  
 }
+
 
 .App-logo {
   height: 40vmin;
@@ -32,6 +34,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: black;
 }
 .carda::-webkit-scrollbar {
   display: none;

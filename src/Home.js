@@ -72,7 +72,7 @@ while(i<users["data"].length){
   <Form.Label>Password</Form.Label>
   <Form.Control size="lg" type="password" id="password" placeholder="Password" />
 </Form.Group>
-<Link to="/result" /* onClick={handleBtn} */onClick={e => this._onClick(e)}>
+<Link to="/items" /* onClick={handleBtn} */onClick={e => this._onClick(e)}>
 <Button variant="primary" type="submit">
   Submit
 </Button>
