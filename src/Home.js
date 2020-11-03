@@ -31,8 +31,28 @@ fetch('http://localhost:3090/auth', requestOptions)
             );
 
 
-export default class Home extends React.Component<definedProps,definedState>{
-
+export default class Home extends React.Component{
+  _onClick = (e) => {
+    var mailId=document.getElementById("mail").value;
+var password=document.getElementById("password").value;
+var i =0;
+while(i<users["data"].length){
+  if(users["data"][i]["username"]===mailId&&users["data"][i]["pass"]===password){
+    if(users["data"][i]["approved"]==="n"){
+      alert("User not Approved")
+    }
+    alert("Logged in successfully")
+    return;
+  }
+  else{
+    alert("Invalid Login or user not Approved yet")
+    e.preventDefault()
+    return;
+  }
+  i++
+}
+    
+}
     
   render(){
     return(
@@ -52,7 +72,7 @@ export default class Home extends React.Component<definedProps,definedState>{
   <Form.Label>Password</Form.Label>
   <Form.Control size="lg" type="password" id="password" placeholder="Password" />
 </Form.Group>
-<Link to="/result" onClick={handleBtn}>
+<Link to="/result" /* onClick={handleBtn} */onClick={e => this._onClick(e)}>
 <Button variant="primary" type="submit">
   Submit
 </Button>
