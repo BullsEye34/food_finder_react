@@ -1,38 +1,67 @@
-import {Form, Button, Alert} from 'react-bootstrap'
+import {Form, Button} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
+import React from 'react'
 
 const handleBtn = (event) => {
-console.log("hi")
-};
- function Home(){
-    return(
-        <header className="App-header">
-        <div className="carda">
-            <div className="content">
-            <Form>
-  <Form.Group controlId="formBasicEmail">
-    <Form.Label>Email address</Form.Label>
-    <Form.Control size="lg" type="email" placeholder="Enter email" />
-    <Form.Text className="text-muted">
-      We'll never share your email with anyone else.
-    </Form.Text>
-  </Form.Group>
-
-  <Form.Group controlId="formBasicPassword">
-    <Form.Label>Password</Form.Label>
-    <Form.Control size="lg" type="password" placeholder="Password" />
-  </Form.Group>
-  <Link to="/result" onClick={handleBtn}>
-  <Button variant="primary" type="submit" onClick="">
-    Submit
-  </Button>
-                                </Link>
-  
-</Form>
-            </div>
-        </div>
-      </header>
-    );
+console.log(users["data"])
+var mailId=document.getElementById("mail").value;
+var password=document.getElementById("password").value;
+var i =0;
+while(i<users["data"].length){
+  if(users["data"][i]["username"]===mailId&&users["data"][i]["pass"]===password){
+    alert("Logged in successfully")
+    return;
+  }
+  else{
+    alert("Wadafaque")
+    return;
+  }
+  i++
 }
+};
+var users;
+var admins;
+const requestOptions = {
+  method: 'GET',
+  headers: { 'Content-Type': 'application/json' },
+};
+fetch('http://localhost:3090/auth', requestOptions)
+            .then(response => response.json())
+            .then(data => users=data
+            );
 
-export default Home;
+
+export default class Home extends React.Component<definedProps,definedState>{
+
+    
+  render(){
+    return(
+      <header className="App-header">
+      <div className="carda">
+          <div className="content">
+          <Form>
+<Form.Group controlId="formBasicEmail">
+  <Form.Label>Email address</Form.Label>
+  <Form.Control size="lg" type="email" id="mail" placeholder="Enter email" />
+  <Form.Text className="text-muted">
+    We'll never share your email with anyone else.
+  </Form.Text>
+</Form.Group>
+
+<Form.Group controlId="formBasicPassword">
+  <Form.Label>Password</Form.Label>
+  <Form.Control size="lg" type="password" id="password" placeholder="Password" />
+</Form.Group>
+<Link to="/result" onClick={handleBtn}>
+<Button variant="primary" type="submit">
+  Submit
+</Button>
+                              </Link>
+
+</Form>
+          </div>
+      </div>
+    </header>
+  );
+  }
+}
