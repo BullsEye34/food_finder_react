@@ -5,10 +5,17 @@ import {ListGroup, Modal, Button}  from 'react-bootstrap'
 
 export default class Items extends React.Component{
     state={ 
-        items:[], show:false, cartItems:[]
+        items:[], show:false, cartItems:[], newCart:{}
     };
     handleShow = () => this.setState({show:true});
-    handleClose = () => this.setState({show:false});
+    handleClose = () => {
+        this.setState({show:false});
+        if(this.state.cartItems.length===0){
+            alert("add")
+        }
+        else
+            alert("Order Submitted")
+    };
     
     constructor(props){
         super(props)
@@ -31,7 +38,12 @@ export default class Items extends React.Component{
         newArray.push(thing);   
         this.setState({cartItems:newArray})
         console.log(this.state.cartItems)
-        alert("Item has been added: "+thing)
+        //alert("Item has been added: "+thing)
+
+        var count = {};
+        this.state.cartItems.forEach(function(i) { count[i] = (count[i]||0) + 1;});
+        await this.setState({newCart:count})
+        console.log(this.state.newCart)
     }
      toBase64(arr) {
         //console.log(arr)
@@ -79,7 +91,6 @@ export default class Items extends React.Component{
 {this.state.cartItems!==undefined && this.state.cartItems.sort().map(listitem => (
         <ListGroup.Item  key={listitem.slno} >
             {listitem}
-           
         </ListGroup.Item>))}
 
 </ListGroup>
