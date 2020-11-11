@@ -28,9 +28,10 @@ export default class Items extends React.Component{
     }
     async clicker(thing){
         var newArray = this.state.cartItems.slice();    
-    newArray.push(thing);   
-    this.setState({cartItems:newArray})
-    console.log(this.state.cartItems)
+        newArray.push(thing);   
+        this.setState({cartItems:newArray})
+        console.log(this.state.cartItems)
+        alert("Item has been added: "+thing)
     }
      toBase64(arr) {
         //console.log(arr)
@@ -75,7 +76,7 @@ export default class Items extends React.Component{
         </Modal.Header>
         <Modal.Body className="modalCart">
         <ListGroup >
-{this.state.cartItems!==undefined && this.state.cartItems.map(listitem => (
+{this.state.cartItems!==undefined && this.state.cartItems.sort().map(listitem => (
         <ListGroup.Item  key={listitem.slno} >
             {listitem}
            
@@ -88,7 +89,7 @@ export default class Items extends React.Component{
             Close
           </Button>
           <Button variant="primary" onClick={this.handleClose}>
-            Save Changes
+            Place Order
           </Button>
         </Modal.Footer>
       </Modal>
