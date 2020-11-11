@@ -99,3 +99,6 @@
 .cart h1{
   color: black;
 }
+.modalCart{
+  height: 50vh;
+}

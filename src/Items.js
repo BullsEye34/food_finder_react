@@ -1,12 +1,15 @@
 import React from 'react'
-import {ListGroup}  from 'react-bootstrap'
+import {ListGroup, Modal, Button}  from 'react-bootstrap'
 
 
 
 export default class Items extends React.Component{
-    state={
-        listitems: ["Spring", "Summer", "Fall"], items:[]
+    state={ 
+        items:[], show:false, cartItems:[]
     };
+    handleShow = () => this.setState({show:true});
+    handleClose = () => this.setState({show:false});
+    
     constructor(props){
         super(props)
         this.fetcher();                 
@@ -24,21 +27,20 @@ export default class Items extends React.Component{
                       ); 
     }
     async clicker(thing){
-        console.log(thing)
+        var newArray = this.state.cartItems.slice();    
+    newArray.push(thing);   
+    this.setState({cartItems:newArray})
+    console.log(this.state.cartItems)
     }
      toBase64(arr) {
-        console.log(arr)
+        //console.log(arr)
         //arr = new Uint8Array(arr) //if it's an ArrayBuffer
         return btoa(
            arr.reduce((data, byte) => data + String.fromCharCode(byte), '')
         );
      }
     render(){
-        console.log(this.state.items)
-        if(this.state.items["data"]===undefined){console.log("Bleh")} else
-        {this.state.items["data"].map(listItem=>(
-            console.log(listItem)
-        ))}
+        
         return(
             <header className="App-header">
       <div className="carda">
@@ -64,9 +66,32 @@ export default class Items extends React.Component{
 
 </ListGroup>
       </div>
-      <div className="cart">
+      <div className="cart" onClick={this.handleShow}>
           <h1>Cart</h1>
       </div>
+      <Modal show={this.state.show} onHide={this.handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Cart Items</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="modalCart">
+        <ListGroup >
+{this.state.cartItems!==undefined && this.state.cartItems.map(listitem => (
+        <ListGroup.Item  key={listitem.slno} >
+            {listitem}
+           
+        </ListGroup.Item>))}
+
+</ListGroup>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={this.handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={this.handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </header>
         );
     }
