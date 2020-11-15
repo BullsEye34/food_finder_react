@@ -10,7 +10,7 @@ export default class Items extends React.Component{
        
     }
     state={ 
-        items:[], show:false, cartItems:[], newCart:{}
+        items:[], show:false, cartItems:[], newCart:{},createOrder:{}
     };
     handleShow = () => this.setState({show:true});
     handleClose1=()=>this.setState({show:false});
@@ -19,8 +19,10 @@ export default class Items extends React.Component{
         if(this.state.cartItems.length===0){
             alert("Please Add something to the Cart!")
         }
-        else
+        else{
+            this.createOrder();
             alert("Order Submitted")
+        }
     };
     
     constructor(props){
@@ -31,7 +33,7 @@ export default class Items extends React.Component{
     async fetcher (){
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json',  },
           };
           await fetch('http://localhost:3090/items', requestOptions)
                       .then(response => response.json())
@@ -39,6 +41,20 @@ export default class Items extends React.Component{
                           this.setState({items:data})
                       }
                       ); 
+    }
+    async createOrder(){
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'custID':this.props.location.state.custID.toString() },
+            body: JSON.stringify({custID: this.props.location.state.custID.toString()})
+        };
+        await fetch('http://localhost:3090/createOrder', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            this.setState({createOrder:data})
+            console.log(data)
+        }
+        );
     }
     async clicker(thing){
         var newArray = this.state.cartItems.slice();    
