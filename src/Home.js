@@ -1,24 +1,9 @@
 import {Form, Button} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
+import DelayLink from 'react-delay-link';
 import React from 'react'
 
-const handleBtn = (event) => {
-console.log(users["data"])
-var mailId=document.getElementById("mail").value;
-var password=document.getElementById("password").value;
-var i =0;
-while(i<users["data"].length){
-  if(users["data"][i]["username"]===mailId&&users["data"][i]["pass"]===password){
-    alert("Logged in successfully")
-    return;
-  }
-  else{
-    alert("Wadafaque")
-    return;
-  }
-  i++
-}
-};
+
 var users;
 var admins;
 const requestOptions = {
@@ -30,9 +15,13 @@ fetch('http://localhost:3090/auth', requestOptions)
             .then(data => users=data
             );
 
-
+var ii;
 export default class Home extends React.Component{
-  _onClick = (e) => {
+  
+  state={
+    custID:"",
+  }
+  _onClick = async (e) => {
     var mailId=document.getElementById("mail").value;
 var password=document.getElementById("password").value;
 var i =0;
@@ -42,6 +31,9 @@ while(i<users["data"].length){
       alert("User not Approved")
     }
     alert("Logged in successfully")
+    setTimeout(async()=>{
+      await this.setState({custID : users["data"][i]["username"]},()=>{console.log(this.state.custID)});
+    }, 10)
     return;
   }
   else{
@@ -55,7 +47,12 @@ while(i<users["data"].length){
 }
     
   render(){
+    var route={pathname: "/items/", 
+    state: {custID: this.state.custID}}
+    
+    
     return(
+      
       <header className="App-header">
       <div className="carda">
           <div className="content">
@@ -72,11 +69,11 @@ while(i<users["data"].length){
   <Form.Label>Password</Form.Label>
   <Form.Control size="lg" type="password" id="password" placeholder="Password" />
 </Form.Group>
-<Link to="/items" /* onClick={handleBtn} */onClick={e => this._onClick(e)}>
+<DelayLink delay={2000} to={route} /* onClick={handleBtn} */onClick={e => this._onClick(e)} clickAction ={e=>this._onClick(e)}>
 <Button variant="primary" type="submit">
   Submit
 </Button>
-                              </Link>
+                              </DelayLink>
 
 </Form>
           </div>

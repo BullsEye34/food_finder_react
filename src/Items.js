@@ -1,17 +1,23 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import {ListGroup, Modal, Button}  from 'react-bootstrap'
 
 
 
 export default class Items extends React.Component{
+    
+    _onClick = (e) => {
+       
+    }
     state={ 
         items:[], show:false, cartItems:[], newCart:{}
     };
     handleShow = () => this.setState({show:true});
+    handleClose1=()=>this.setState({show:false});
     handleClose = () => {
         this.setState({show:false});
         if(this.state.cartItems.length===0){
-            alert("add")
+            alert("Please Add something to the Cart!")
         }
         else
             alert("Order Submitted")
@@ -19,7 +25,8 @@ export default class Items extends React.Component{
     
     constructor(props){
         super(props)
-        this.fetcher();                 
+        this.fetcher();  
+        console.log(this.props.location.state);
     }
     async fetcher (){
         const requestOptions = {
@@ -70,6 +77,9 @@ export default class Items extends React.Component{
                 <div className="itemName"><h2>{listitem.name}</h2></div>
                 <div className="itemDesc"><h5>{listitem.description}</h5></div>
                 <div className="itemQty"><h3>{listitem.price}</h3></div>
+                <Button variant="primary">
+                    Add to Cart
+                </Button>
 
             </div>
 
@@ -96,12 +106,14 @@ export default class Items extends React.Component{
 </ListGroup>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={this.handleClose}>
+          <Button variant="secondary" onClick={this.handleClose1}>
             Close
           </Button>
+          <Link to="/orderPlaced" onClick={e => this._onClick(e)}>
           <Button variant="primary" onClick={this.handleClose}>
             Place Order
           </Button>
+          </Link>
         </Modal.Footer>
       </Modal>
     </header>
