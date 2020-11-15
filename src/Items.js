@@ -7,6 +7,16 @@ import {ListGroup, Modal, Button}  from 'react-bootstrap'
 export default class Items extends React.Component{
     
     _onClick = (e) => {
+        this.setState({show:false});
+        if(this.state.cartItems.length===0){
+            alert("Please Add something to the Cart!")
+            e.preventDefault()
+            
+        }
+        else{
+            this.createOrder();
+            alert("Order Submitted")
+        }
        
     }
     state={ 
@@ -15,14 +25,7 @@ export default class Items extends React.Component{
     handleShow = () => this.setState({show:true});
     handleClose1=()=>this.setState({show:false});
     handleClose = () => {
-        this.setState({show:false});
-        if(this.state.cartItems.length===0){
-            alert("Please Add something to the Cart!")
-        }
-        else{
-            this.createOrder();
-            alert("Order Submitted")
-        }
+        
     };
     
     constructor(props){
@@ -45,8 +48,13 @@ export default class Items extends React.Component{
     async createOrder(){
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'custID':this.props.location.state.custID.toString() },
-            body: JSON.stringify({custID: this.props.location.state.custID.toString()})
+            headers: {
+                'Content-Type': 'application/json', 
+                'custID':this.props.location.state.custID.toString()
+            },
+            body: JSON.stringify({
+                custID: this.props.location.state.custID.toString(),
+            })
         };
         await fetch('http://localhost:3090/createOrder', requestOptions)
         .then(response => response.json())
@@ -126,7 +134,7 @@ export default class Items extends React.Component{
             Close
           </Button>
           <Link to="/orderPlaced" onClick={e => this._onClick(e)}>
-          <Button variant="primary" onClick={this.handleClose}>
+          <Button variant="primary" >
             Place Order
           </Button>
           </Link>

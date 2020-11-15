@@ -3,7 +3,6 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql');
-const bodyParser = require('body-parser');
 
 
 const connection = mysql.createConnection({
@@ -23,8 +22,14 @@ connection.connect((err) => {
 
 // Starting our app.
 const app = express();
+// Parse URL-encoded bodies (as sent by HTML forms)
+app.use(express.urlencoded());
+
+// Parse JSON bodies (as sent by API clients)
+app.use(express.json());
+
+
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
 // Creating a GET route that returns data from the 'users' table.
 app.get('/auth', function (req, res) {
     // Connecting to the database.
@@ -82,6 +87,7 @@ app.get('/items', function (req, res) {
   });
 });
 
+
 // Creating a POST route that creates an order and returns data from the 'itemOrder' table.
 app.post('/createOrder', function (req, res) {
   // Connecting to the database.
@@ -95,12 +101,29 @@ app.post('/createOrder', function (req, res) {
 
     // Getting the 'response' from the database and sending it to our route. This is were the data is.
     else {
+      connection.query(`Insert into itemOrder values('4','${results.insertId.toString()}')`, function (error, results, fields) {
+        // If some error occurs, we throw an error.
+        if (error) {
+          return res.send(error);
+          console.log(error)
+        }
+    
+        // Getting the 'response' from the database and sending it to our route. This is were the data is.
+        else {
+          return res.json({
+            data: results
+          });
+        };
+      });/* 
       return res.json({
         data: results
-      });
+      }); */
     };
   });
-  console.log(req.headers.custid);
+
+  
+  
+  console.log(req.body);
 });
 
 // Starting our server.
