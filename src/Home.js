@@ -32,7 +32,7 @@ while(i<users["data"].length){
     }
     alert("Logged in successfully")
     setTimeout(async()=>{
-      await this.setState({custID : users["data"][i]["username"]},()=>{console.log(this.state.custID)});
+      await this.setState({custID : users["data"][i]["username"]},()=>{this.props.history.push({pathname:"/items/", state:{custID: this.state.custID}})});
     }, 10)
     return;
   }
@@ -69,11 +69,12 @@ while(i<users["data"].length){
   <Form.Label>Password</Form.Label>
   <Form.Control size="lg" type="password" id="password" placeholder="Password" />
 </Form.Group>
-<DelayLink delay={2000} to={route} /* onClick={handleBtn} */onClick={e => this._onClick(e)} clickAction ={e=>this._onClick(e)}>
-<Button variant="primary" type="submit">
+{/* <DelayLink delay={2000} to={route} /* onClick={handleBtn} *>
+
+                              </DelayLink> */}
+                              <Button variant="primary" type="submit" onClick={e => this._onClick(e)} clickAction ={e=>this._onClick(e)}>
   Submit
 </Button>
-                              </DelayLink>
 
 </Form>
           </div>
