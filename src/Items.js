@@ -53,7 +53,8 @@ export default class Items extends React.Component{
                 'custID':this.props.location.state.custID.toString()
             },
             body: JSON.stringify({
-                custID: this.props.location.state.custID.toString(),
+                newCart: this.state.cartItems,
+                custID:this.props.location.state.custID.toString()
             })
         };
         await fetch('http://localhost:3090/createOrder', requestOptions)
@@ -73,8 +74,8 @@ export default class Items extends React.Component{
 
         var count = {};
         this.state.cartItems.forEach(function(i) { count[i] = (count[i]||0) + 1;});
-        await this.setState({newCart:count})
-        console.log(this.state.newCart)
+        this.setState({newCart:count},()=>{console.log(this.state.newCart)})
+        
     }
      toBase64(arr) {
         //console.log(arr)

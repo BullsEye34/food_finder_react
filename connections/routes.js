@@ -92,7 +92,7 @@ app.get('/items', function (req, res) {
 app.post('/createOrder', function (req, res) {
   // Connecting to the database.
   // Executing the MySQL query (select all data from the 'users' table).
-  connection.query(`Insert into transaction values('${req.headers.custid.toString()}',NULL)`, function (error, results, fields) {
+  connection.query(`Insert into transaction values('${req.body.custID.toString()}',NULL)`, function (error, results, fields) {
     // If some error occurs, we throw an error.
     if (error) {
       return res.send(error);
@@ -101,20 +101,25 @@ app.post('/createOrder', function (req, res) {
 
     // Getting the 'response' from the database and sending it to our route. This is were the data is.
     else {
-      connection.query(`Insert into itemOrder values('4','${results.insertId.toString()}')`, function (error, results, fields) {
-        // If some error occurs, we throw an error.
-        if (error) {
-          return res.send(error);
-          console.log(error)
-        }
-    
-        // Getting the 'response' from the database and sending it to our route. This is were the data is.
-        else {
-          return res.json({
-            data: results
-          });
-        };
-      });/* 
+      
+      req.body["newCart"].forEach(element => {
+        console.log(element)
+        connection.query(`Insert into itemOrder values('${element.toString()}','${results.insertId.toString()}')`, function (error, results, fields) {
+          // If some error occurs, we throw an error.
+          if (error) {
+            //return res.send(error);
+            console.log(error)
+          }
+      
+          // Getting the 'response' from the database and sending it to our route. This is were the data is.
+          else {
+            /* return res.json({
+              data: results
+            }); */
+          };
+        });
+      });
+      /* 
       return res.json({
         data: results
       }); */
@@ -123,7 +128,7 @@ app.post('/createOrder', function (req, res) {
 
   
   
-  console.log(req.body);
+  console.log(req.body["newCart"]);
 });
 
 // Starting our server.
