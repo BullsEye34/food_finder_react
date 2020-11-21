@@ -1,6 +1,4 @@
 import {Form, Button} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
-import DelayLink from 'react-delay-link';
 import React from 'react'
 
 
