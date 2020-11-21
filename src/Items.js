@@ -88,6 +88,7 @@ export default class Items extends React.Component{
         
         return(
             <header className="App-header">
+                {this.adminOnlyShow()}
       <div className="carda">
 
 <ListGroup className="listt">
@@ -143,5 +144,16 @@ export default class Items extends React.Component{
       </Modal>
     </header>
         );
+    }
+
+    adminOnlyShow() {
+        return <div className="adminOnly">
+            <div className="addItem">
+                                ADD Items
+            </div>
+            <div className="addItem">
+                Approve User
+            </div>
+        </div>;
     }
 }
