@@ -14,12 +14,17 @@ fetch('http://localhost:3090/auth', requestOptions)
             .then(response => response.json())
             .then(data => users=data
             );
+fetch('http://localhost:3090/admin', requestOptions)
+            .then(response => response.json())
+            .then(data => admins=data
+            );
 
 var ii;
 export default class Home extends React.Component{
   
   state={
     custID:"",
+    isAdmin:false
   }
   _onClick = async (e) => {
     var mailId=document.getElementById("mail").value;
@@ -31,8 +36,13 @@ while(i<users["data"].length){
       alert("User not Approved")
     }
     alert("Logged in successfully")
+    admins["data"].forEach(element => {
+      if(element["username"]==users["data"][i]["username"]){
+        this.setState({isAdmin:true})
+      }
+    });
     setTimeout(async()=>{
-      await this.setState({custID : users["data"][i]["username"]},()=>{this.props.history.push({pathname:"/items/", state:{custID: this.state.custID}})});
+      await this.setState({custID : users["data"][i]["username"]},()=>{this.props.history.push({pathname:"/items/", state:{custID: this.state.custID, isAdmin:this.state.isAdmin}})});
     }, 10)
     return;
   }

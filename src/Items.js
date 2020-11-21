@@ -88,7 +88,7 @@ export default class Items extends React.Component{
         
         return(
             <header className="App-header">
-                {this.adminOnlyShow()}
+                {this.state.isAdmin!==false && this.adminOnlyShow()}
       <div className="carda">
 
 <ListGroup className="listt">
