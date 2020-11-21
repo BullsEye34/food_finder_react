@@ -147,11 +147,11 @@ export default class Items extends React.Component{
     }
 
     adminOnlyShow() {
-        return <div className="adminOnly">
-            <div className="addItem">
+        return <div className="adminOnly" >
+            <div className="addItem" onClick={()=>{console.log("Wahh")}}>
                                 ADD Items
             </div>
-            <div className="addItem">
+            <div className="addItem" onClick={()=>{console.log("Woohoo")}}>
                 Approve User
             </div>
         </div>;
