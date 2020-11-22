@@ -83,6 +83,10 @@ while(i<users["data"].length){
                               <Button variant="primary" type="submit" onClick={e => this._onClick(e)} clickAction ={e=>this._onClick(e)}>
   Submit
 </Button>
+<br/>
+<Button variant="secondary" style={{width: 500}} type="submit" onClick={e => this._onClick(e)} clickAction ={e=>this._onClick(e)}>
+  Register User
+</Button>
 
 </Form>
           </div>
