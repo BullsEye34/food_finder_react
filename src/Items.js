@@ -151,7 +151,7 @@ export default class Items extends React.Component{
             <div className="addItem" onClick={()=>{console.log("Wahh")}}>
                                 ADD Items
             </div>
-            <div className="addItem" onClick={()=>{console.log("Woohoo")}}>
+            <div className="addItem" onClick={()=>{this.props.history.push("/approveUser")}}>
                 Approve User
             </div>
         </div>;

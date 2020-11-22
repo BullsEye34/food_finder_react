@@ -53,6 +53,43 @@ while(i<users["data"].length){
 }
     
 }
+_onClick1=async (e)=>{
+  var mailId=document.getElementById("mail").value;
+  var password=document.getElementById("password").value;
+  if(mailId.endsWith("@gmail.com")){
+    this.clicker1(mailId, password)
+  }
+  else{
+    alert("Not a GMail Address")
+  }
+}
+
+async clicker1(un, pw){
+  const requestOptions = {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json', 
+      },
+      body: JSON.stringify({
+          username: un.toString(),
+          password: pw.toString()
+      })
+  };
+  await fetch('http://localhost:3090/regUser', requestOptions)
+  .then(response => response.json())
+  .then(data => {
+      console.log(data)
+      if(data["data"]!==undefined && data["data"]["affectedRows"]===1){
+          alert("User Sent for Approval")
+          window.location.reload(false)
+      }
+      else{
+        alert("It may Already Exist")
+      }
+  }
+  );
+  
+}
     
   render(){
     var route={pathname: "/items/", 
@@ -80,11 +117,11 @@ while(i<users["data"].length){
 {/* <DelayLink delay={2000} to={route} /* onClick={handleBtn} *>
 
                               </DelayLink> */}
-                              <Button variant="primary" type="submit" onClick={e => this._onClick(e)} clickAction ={e=>this._onClick(e)}>
+                              <Button variant="primary" type="button" onClick={e => this._onClick(e)} clickAction ={e=>this._onClick(e)}>
   Submit
 </Button>
 <br/>
-<Button variant="secondary" style={{width: 500}} type="submit" onClick={e => this._onClick(e)} clickAction ={e=>this._onClick(e)}>
+<Button variant="secondary" className="RegBtn" type="button" onClick={e => this._onClick1(e)} clickAction ={e=>this._onClick1(e)}>
   Register User
 </Button>
 

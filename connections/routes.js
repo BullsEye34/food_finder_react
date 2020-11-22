@@ -151,7 +151,7 @@ app.post('/createOrder', function (req, res) {
 });
 
 
-
+// No Work
 // Creating a POST route that creates an order and returns data from the 'itemOrder' table.
 app.post('/createItem', function (req, res) {
   // Connecting to the database.
@@ -177,11 +177,36 @@ app.post('/createItem', function (req, res) {
   console.log(req.body["newCart"]);
 });
 
-// Creating a POST route that creates an order and returns data from the 'itemOrder' table.
+// Creating a POST route that Approves Users
 app.post('/approval', function (req, res) {
   // Connecting to the database.
   // Executing the MySQL query (select all data from the 'users' table).
   connection.query(`UPDATE users SET approved="y" WHERE username="${req.body.username}"`, function (error, results, fields) {
+    // If some error occurs, we throw an error.
+    if (error) {
+      console.log(error)
+      return res.send(error);
+    }
+
+    // Getting the 'response' from the database and sending it to our route. This is were the data is.
+    else {
+      console.log(results)
+      return res.json({
+        data: results
+      });
+    };
+  });
+
+  
+  
+  console.log(req.body["newCart"]);
+});
+
+// Creating a POST route that Registers a new User
+app.post('/regUser', function (req, res) {
+  // Connecting to the database.
+  // Executing the MySQL query (select all data from the 'users' table).
+  connection.query(`INSERT INTO users (username, pass, approved) VALUES ('${req.body.username}', '${req.body.password}', 'n')`, function (error, results, fields) {
     // If some error occurs, we throw an error.
     if (error) {
       console.log(error)

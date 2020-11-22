@@ -64,6 +64,9 @@ align-items: center;
   align-items: center;
   color: black;
 }
+.RegBtn{
+  width: 50vw;
+}
 .carda::-webkit-scrollbar {
   display: none;
 }
@@ -80,9 +83,9 @@ align-items: center;
   justify-content: space-between;
 }
 .itemContent1{
-  width: 85vw;
+  width: 55vw;
   height: 10vh;
-  padding: 10vh;
+  padding: 7vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
