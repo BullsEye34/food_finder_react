@@ -49,6 +49,25 @@ app.get('/auth', function (req, res) {
     });
 });
 
+// Creating a GET route that returns data from the 'users' table.
+app.get('/notApproved', function (req, res) {
+    // Connecting to the database.
+    // Executing the MySQL query (select all data from the 'users' table).
+    connection.query('SELECT * FROM users where approved="n"', function (error, results, fields) {
+      // If some error occurs, we throw an error.
+      if (error) {
+        return res.send(error);
+      }
+
+      // Getting the 'response' from the database and sending it to our route. This is were the data is.
+      else {
+        return res.json({
+          data: results
+        });
+      };
+    });
+});
+
 // Creating a GET route that returns data from the 'Admin' table.
 app.get('/admin', function (req, res) {
   // Connecting to the database.
@@ -130,6 +149,59 @@ app.post('/createOrder', function (req, res) {
   
   console.log(req.body["newCart"]);
 });
+
+
+
+// Creating a POST route that creates an order and returns data from the 'itemOrder' table.
+app.post('/createItem', function (req, res) {
+  // Connecting to the database.
+  // Executing the MySQL query (select all data from the 'users' table).
+  connection.query(`Insert into items values(NULL ,'${req.body.foodName}','${req.body.foodPrice}','${req.body.foodDesc}')`, function (error, results, fields) {
+    // If some error occurs, we throw an error.
+    if (error) {
+      console.log(error)
+      return res.send(error);
+    }
+
+    // Getting the 'response' from the database and sending it to our route. This is were the data is.
+    else {
+      console.log(results)
+      return res.json({
+        data: results
+      });
+    };
+  });
+
+  
+  
+  console.log(req.body["newCart"]);
+});
+
+// Creating a POST route that creates an order and returns data from the 'itemOrder' table.
+app.post('/approval', function (req, res) {
+  // Connecting to the database.
+  // Executing the MySQL query (select all data from the 'users' table).
+  connection.query(`UPDATE users SET approved="y" WHERE username="${req.body.username}"`, function (error, results, fields) {
+    // If some error occurs, we throw an error.
+    if (error) {
+      console.log(error)
+      return res.send(error);
+    }
+
+    // Getting the 'response' from the database and sending it to our route. This is were the data is.
+    else {
+      console.log(results)
+      return res.json({
+        data: results
+      });
+    };
+  });
+
+  
+  
+  console.log(req.body["newCart"]);
+});
+
 
 // Starting our server.
 app.listen(3090, () => {

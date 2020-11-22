@@ -14,10 +14,30 @@ var foodDesc=document.getElementById("descFood").value;
 var foodImg=document.getElementById("imgFood").value;
 
 console.log(foodName+" "+foodDesc+" "+foodPrice +" "+this.state.id_proof)
+const requestOptions = {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json', 
+        
+    },
+    body: JSON.stringify({
+        foodName: foodName.toString(),
+        foodPrice:foodPrice.toString(),
+        foodDesc:foodDesc.toString(),
+        foodImg:foodImg.toString()
+    })
+};
 
-
+await fetch('http://localhost:3090/createItem', requestOptions)
+    .then(response => response.json())
+        .then(data => {
+            this.setState({createOrder:data})
+            console.log(data)
+        }
+    );
 
 }
+
 onChange = e => {
     this.setState({
         id_proof:e.target.files[0]
@@ -31,7 +51,7 @@ onChange = e => {
           <Form>
 <Form.Group >
   <Form.Label>Name of the food</Form.Label>
-  <Form.Control size="lg" type="email" id="nameFood" placeholder="Enter Name of the Food" />
+  <Form.Control size="lg" type="text" id="nameFood" placeholder="Enter Name of the Food" />
   
 </Form.Group>
 
@@ -51,7 +71,7 @@ onChange = e => {
 
 
 
-                              <Button variant="primary" type="submit" onClick={e => this._onClick(e)} clickAction ={e=>this._onClick(e)}>
+                              <Button variant="primary" type="button" onClick={e => this._onClick(e)} clickAction ={e=>this._onClick(e)}>
   Submit
 </Button>
 
