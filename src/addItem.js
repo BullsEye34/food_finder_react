@@ -1,4 +1,6 @@
 import {Form, Button, FormFile} from 'react-bootstrap'
+
+import { base64StringToBlob } from 'blob-util';
 import React from 'react'
 
 
@@ -38,12 +40,22 @@ await fetch('http://localhost:3090/createItem', requestOptions)
 
 }
 
+
+fromBase64(){
+        
+  const contentType = 'image/png';
+  const b64Data = '';
+  const blob = base64StringToBlob(b64Data, contentType);
+  console.log(blob)
+      }
+
 onChange = e => {
     this.setState({
         id_proof:e.target.files[0]
     },()=>console.log(this.state.id_proof))
  }
   render(){
+    this.fromBase64()
     return(
       <header className="App-header">
       <div className="carda">

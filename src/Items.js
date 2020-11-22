@@ -85,7 +85,6 @@ export default class Items extends React.Component{
         );
      }
     render(){
-        
         return(
             <header className="App-header">
                 {this.state.isAdmin!==false && this.adminOnlyShow()}
@@ -148,7 +147,7 @@ export default class Items extends React.Component{
 
     adminOnlyShow() {
         return <div className="adminOnly" >
-            <div className="addItem" onClick={()=>{console.log("Wahh")}}>
+            <div className="addItem" onClick={()=>{this.props.history.push("/addItem")}}>
                                 ADD Items
             </div>
             <div className="addItem" onClick={()=>{this.props.history.push("/approveUser")}}>
