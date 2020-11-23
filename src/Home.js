@@ -29,9 +29,12 @@ export default class Home extends React.Component{
 var password=document.getElementById("password").value;
 var i =0;
 while(i<users["data"].length){
-  if(users["data"][i]["username"]===mailId&&users["data"][i]["pass"]===password){
+  if(users["data"][i]["username"]===mailId.toString()&&users["data"][i]["pass"]===password.toString()){
     if(users["data"][i]["approved"]==="n"){
       alert("User not Approved")
+      
+e.preventDefault()
+      return;
     }
     alert("Logged in successfully")
     admins["data"].forEach(element => {
@@ -44,14 +47,11 @@ while(i<users["data"].length){
     }, 10)
     return;
   }
-  else{
-    alert("Invalid Login or user not Approved yet")
-    e.preventDefault()
-    return;
-  }
   i++
 }
-    
+alert("Invalid Login or user not Approved yet")
+e.preventDefault()
+return;
 }
 _onClick1=async (e)=>{
   var mailId=document.getElementById("mail").value;
